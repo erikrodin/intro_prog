@@ -1,0 +1,78 @@
+def tokenize(lines):
+    
+    lines=[line.lower() for line in lines]
+
+    words=[]
+
+    for line in lines:
+
+        start = 0
+        while start < len(line):
+            
+            while start < len(line) and line[start].isspace():
+                start=start+1
+                 
+            if start < len(line):
+                if  line[start].isalpha():
+        
+                
+                    end = start
+                    
+                    while end < len(line) and line[end].isalpha():
+                        
+                        end = end+1
+                        
+                    words.append(line[start:end])    
+                    start = end
+                    
+                elif line[start].isdigit():
+                    
+                    end = start
+                    
+                    while end < len(line) and line[end].isdigit():
+                        
+                        end = end+1
+                        
+                    words.append(line[start:end])    
+                    start = end
+                    
+                else:
+                    
+                    words.append(line[start])
+                            
+                    start = start+1
+        
+    return words
+
+
+def countWords(words, stopWords):
+  
+    frequencies={}
+    
+    count=0
+    
+    for word in words:
+        
+        
+        if word not in stopWords:
+            
+            if word not in frequencies:
+                    
+                count = 1
+                frequencies[word] = count
+                
+            else:
+                
+                frequencies[word]=frequencies.get(word)+1
+            
+    
+    return frequencies
+       
+                
+def printTopMost(frequencies,n):
+    
+    
+    for word,freq in sorted(frequencies.items(), key=lambda x: x[1], reverse=True)[:int(n)]:
+        
+        print(str(word).ljust(20),str(freq).rjust(5))
+          
