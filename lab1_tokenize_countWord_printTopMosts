@@ -1,0 +1,93 @@
+
+def tokenize(lines):
+    
+    lines=[line.lower() for line in lines]
+    
+    words=[]
+    
+    for line in lines:
+        
+        start = 0
+       
+        while start < len(line):
+            
+            while line[start].isspace():
+                start=start+1
+                 
+            #print(line[start])
+            
+            if line[start].isalpha():
+                #print(line[start] + " is a letter")
+                
+                end = start
+                
+                while line[end].isalpha():
+                    
+                    end = end+1
+                    
+                words.append(line[start:end])    
+                start = end
+                
+            elif line[start].isdigit():
+                #print(line[start] + " is a digit")
+                
+                end = start
+                
+                while line[end].isdigit():
+                    
+                    end = end+1
+                    
+                words.append(line[start:end])    
+                start = end
+                
+                #print(line[start] + " is a symbol")
+            else:
+                
+                words.append(line[start])
+                         
+                start = start+1
+        
+    return words
+    
+
+
+print(tokenize(['10 sweet apple tarts!']))
+
+
+def countWords(words, stopWords):
+  
+    frequencies={}
+    
+    count=0
+    
+    for word in words:
+        
+        
+        if word not in stopWords:
+            
+            if word not in frequencies:
+                    
+                count = 1
+                frequencies[word] = count
+                
+            else:
+                frequencies[word]=count+1
+    
+    return frequencies
+
+
+
+#print(countWords(['it','is','a','book'], ['a','is','it'] ))        
+                
+def printTopMost(frequencies,n):
+    
+    
+    for word,freq in sorted(frequencies.items(), key=lambda x: x[1], reverse=True)[:n]:
+        
+        print(str(word).ljust(20),str(freq).rjust(5))
+          
+
+printTopMost({'text': 9, 'word': 30, 'fiction': 6, 'count': 11, 'counting': 7, 'novel': 6},3)
+    
+    
+    
